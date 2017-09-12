@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#'Report the percentage of unique taxonomic records of a given taxa identified to species level\n#'\n#' @param taxa A string.\n#' @return the percentage of taxonomic records identified to species level\n#' @examples\n#' taxaaccum(\"Achnanthes\")\n\ntaxaprecision <- function(taxa) {\n  taxa <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa | Orders == taxa | Families == taxa | Genera == taxa)\n  species_complete <- which(taxa$AphiaIDs != \"\")\n  all_species <- dim(taxa)[[1]][1]\n  species_precision = length(species_complete) / all_species\n  return(species_precision)\n}\n\n\n",
+    "created" : 1504613441204.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2745617520",
+    "id" : "9A4ECEA3",
+    "lastKnownWriteTime" : 1505113425,
+    "last_content_update" : 1505113425768,
+    "path" : "~/Documents/R packages/biotaxa/R/taxaprecision.R",
+    "project_path" : "R/taxaprecision.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

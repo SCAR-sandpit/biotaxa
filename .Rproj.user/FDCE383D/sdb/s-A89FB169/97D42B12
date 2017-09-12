@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\n\nshinyUI(fluidPage(\n  titlePanel('Discovering Taxonomic Diversity in Antarctica and the Southern Ocean'),\n\n  sidebarLayout(\n    sidebarPanel(\n      helpText(\"This app visualizes the accumulative curve of discovered species belong to same higher taxa.\n               Two user-input parameters, 'taxa' and 'rank', are required.\n               'taxa' refers to a specific taxa in a kingdom, a phylum, a class, a family or a genus to which all inquired species belong to.\n               'rank' refers to the taxonomic rank below kingdom (i.e. phylum, class, family, genus or species) that the user would like to visualize in the accumulative curve.\n               Please note that the rank of user-input 'rank' must be lower than that of user-input 'taxa'.\n               The default setting exemplifies the accumulative curve of discovered phyla of Animalia over time.\"),\n      fileInput(\"file1\", \"Choose CSV File\",\n        accept = c(\n          \"text/csv\",\n          \"text/comma-separated-values, tax/plain\",\n          \".csv\")\n        ),\n      checkboxInput(\"header\", \"Header\", TRUE),\n      textInput(\"taxa\", \"enter taxa:\",\"Animalia\"),\n      textInput(\"rank\", \"enter rank:\",\"Phylum\"),\n      helpText(\"By selecting fitting curve, you chose to visualise the fitting curve and errors of a logistic regression model.\"),\n      checkboxInput(\"model\", label = \"fitting curve (logistic regression)\", value = FALSE)#,\n\n      #actionButton(\"newplot\", \"Update View\")\n    ),\n    mainPanel(\n      tableOutput(\"dataview\"),\n      plotOutput(\"taxacurve\"),\n      plotOutput(\"fittingcurve\")\n    )\n)\n))\n",
+    "created" : 1504617045826.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3720852702",
+    "id" : "97D42B12",
+    "lastKnownWriteTime" : 1504683565,
+    "last_content_update" : 1504683565530,
+    "path" : "~/Documents/ANTABIS/RASp/RAS species list/Shiny App/ui.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

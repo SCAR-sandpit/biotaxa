@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: biotaxa\nType: Package\nTitle: Visualising the growth and prediction of taxonomic diversity and identifying taxonomic incompleteness and imprecision\nVersion: 0.1.0\nAuthor: Hsun-Yi Hsieh\nMaintainer: Hsun-Yi Hsieh (hhsunyi@naturalsciences.be)\nDescription: This package visualise the accumulative curve of interested taxa over time, predicts taxonomic diversity and provides quantitative measures of taxonomic incompleteness and imprecision\nLicense: What license is it under?\nEncoding: UTF-8\nLazyData: true\nRoxygenNote: 6.0.1\nDepends: \n    data.table\nSuggests: \n    knitr,\n    rmarkdown\nVignetteBuilder: knitr\n",
+    "created" : 1504869967106.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3781728168",
+    "id" : "BA2C6B29",
+    "lastKnownWriteTime" : 1505135022,
+    "last_content_update" : 1505135022598,
+    "path" : "~/Documents/R packages/biotaxa/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}
