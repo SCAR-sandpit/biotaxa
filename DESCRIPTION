@@ -2,16 +2,21 @@ Package: biotaxa
 Type: Package
 Title: Visualising the growth and prediction of taxonomic diversity and identifying taxonomic incompleteness and imprecision
 Version: 0.1.0
-Author: Hsun-Yi Hsieh
-Maintainer: Hsun-Yi Hsieh (hhsunyi@naturalsciences.be)
-Description: This package visualise the accumulative curve of interested taxa over time, predicts taxonomic diversity and provides quantitative measures of taxonomic incompleteness and imprecision
-License: What license is it under?
+Author: Hsun-Yi Hsieh 
+Maintainer: Hsun-Yi Hsieh <hhsunyi@naturalscience.be>
+Description: This package visualise the accumulative curve of interested taxa over time, predicts taxonomic diversity and provides quantitative measures of taxonomic incompleteness and imprecision.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Depends: 
-    data.table
-Suggests: 
+Depends: R (>= 3.4.2)
+Imports:
+    data.table,
+    stringr,
+    dplyr,
+    MASS
+Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

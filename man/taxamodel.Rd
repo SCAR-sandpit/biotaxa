@@ -20,5 +20,7 @@ an accumulative curve of taxa overlapped with a fitting curve of selected model
 Fitting the taxonomic accumulation of a given taxa with user-selected logistic or Michaelis-Menten model
 }
 \examples{
-taxamodel("Animalia", "Phyla", "logistic")
+\dontrun{
+taxamodel("Animalia", "Phylum", "logistic")
+}
 }

@@ -3,7 +3,10 @@
 #' @param taxa A string.
 #' @return the percentage of taxonomic records identified to species level
 #' @examples
-#' taxaaccum("Achnanthes")
+#' \dontrun{
+#' taxaprecision("Achnanthes")
+#' }
+#' @export
 
 taxaprecision <- function(taxa) {
   taxa <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa | Orders == taxa | Families == taxa | Genera == taxa)

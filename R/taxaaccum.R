@@ -3,11 +3,16 @@
 #' @param taxa A string.
 #' @param rank A string.
 #' @return table of accnumative numbers of \code{rank} of a \code{taxa}
-#' @examples
-#' taxaaccum("Animalia", "Phyla")
+#' @import data.table
+#' @import graphics
+#'@examples
+#'\dontrun{
+#'taxaaccum("Animalia", "Phylum")
+#'}
+#'@export
 
 taxaaccum <- function(taxa, rank) {
-  df <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa |                 Orders == taxa | Families == taxa | Genera == taxa)
+  df <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa | Orders == taxa | Families == taxa | Genera == taxa)
   dt = as.data.table(unique(df))
   setkey(dt, "year")
   if (rank == "Phylum") {

@@ -18,5 +18,7 @@ table of accnumative numbers of \code{rank} of a \code{taxa}
 Report the accumulative numbers of a rank of a given taxa overtime
 }
 \examples{
-taxaaccum("Animalia", "Phyla")
+\dontrun{
+taxaaccum("Animalia", "Phylum")
+}
 }

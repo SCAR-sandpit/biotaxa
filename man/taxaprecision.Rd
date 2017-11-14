@@ -16,5 +16,7 @@ the percentage of taxonomic records identified to species level
 Report the percentage of unique taxonomic records of a given taxa identified to species level
 }
 \examples{
-taxaaccum("Achnanthes")
+\dontrun{
+taxaprecision("Achnanthes")
+}
 }

@@ -4,9 +4,18 @@
 #' @param rank A string.
 #' @param method A string.
 #' @return an accumulative curve of taxa overlapped with a fitting curve of selected model
-#' @examples taxamodel("Animalia", "Phyla", "logistic")
+#' @import data.table
+#' @importFrom dplyr count
+#' @import graphics
+#' @import stats
+#' @examples
+#' \dontrun{
+#' taxamodel("Animalia", "Phylum", "logistic")
+#' }
+#' @export
 
 taxamodel <- function(taxa, rank, method) {
+  tryCatch({
   df <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa |
       Orders == taxa | Families == taxa | Genera == taxa)
   dt = as.data.table(unique(df))
@@ -47,19 +56,14 @@ taxamodel <- function(taxa, rank, method) {
     K_start <- SS["alpha"]
     R_start <- 1/SS["scale"]
     N0_start <- SS["alpha"]/(exp(SS["xmid"]/SS["scale"])) + 1
-    #return(summary(SS))
 
     log_formula<-formula(N_obs ~ K * N0 * exp(R * times) / (K + N0 * (exp(R * times) - 1)))
     m<-nls(log_formula,start = list(K = K_start, R = R_start, N0 = N0_start))
-    #estimated parameters
-    #summary(m)
 
     corr_coef <- cor(N_obs,predict(m))
-    #return(corr_coef)
     lines(times,predict(m),col="red",lty=2,lwd=2)
     n = length(times)
 
-    ## add model predictions
     K = summary(m)$coefficient[1]
     R = summary(m)$coefficient[2]
     N0 = summary(m)$coefficient[3]
@@ -92,9 +96,7 @@ taxamodel <- function(taxa, rank, method) {
     Vm_start <- MM["Vm"]
     K_start <- MM["K"]
 
-    #model <- nls(N_obs ~ SSmicmen(N_obs, Vm, K), data = dd)
     model <- nls(N_obs ~ Vm * times / (K + times), start = list(Vm = Vm_start, K = K_start))
-    #return(summary(model))
 
     corr_coef <- cor(N_obs, predict(model))
     #return(corr_coef)
@@ -115,7 +117,7 @@ taxamodel <- function(taxa, rank, method) {
     lines(times, UP, col = 'red', lty = "dashed")
     LW = (a - a_sd) * times / (b + b_sd + times)
     lines(times, LW, col ='red', lty = 'dashed')
-    #return(summary(model))
     return('correlation coefficient' = corr_coef)
   }
+  }, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))})
 }
