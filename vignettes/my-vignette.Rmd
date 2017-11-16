@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Use the package
 
-`install.packages(biotaxa)`
+`devtools::install_github("hhsieh/biotaxa_Rpackage")`
 
 `library(biotaxa)`
 
