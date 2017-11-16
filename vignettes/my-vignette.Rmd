@@ -87,7 +87,7 @@ taxaaccum <- function(taxa, rank) {
 }
 ```
 
-`taxaaccum()` generates the accumulation curve of taxa in a lower rank belong to the same higher taxa. For instance, the following example generates the accumulation curve of discovered phyla belong to *Animalia* over the past. Note that here *taxa* needs to be in higher order than *rank*.
+`taxaaccum()` generates the accumulation curve of taxa in a lower rank belong to the same higher taxa. For instance, the following example generates the accumulation curve of discovered phyla belong to *Animalia*. Note that here *taxa* needs to be in higher order than *rank*.
 
 ```{r, fig.show='hold'}
 #Example
@@ -215,7 +215,7 @@ taxamodel("Animalia", "Phylum", "logistic")
 
 3. *taxamodel_cor()*
 
-`taxamodel_cor()` yields the correlation coefficient of selected model.
+`taxamodel_cor()` yields the correlation coefficient of the selected model.
 
 ```{r taxa model cor, echo = FALSE}
 taxamodel_cor <- function(taxa, rank, method) {
@@ -280,6 +280,7 @@ taxamodel_cor(taxa = "Animalia", rank = "Class", method = "logistic")
 ```
 
 4. *taxaprecision()*
+
 `taxaprecision()`computes the percentage of records of a taxa being identified to the species level.
 
 ```{r taxa precisions, echo = FALSE}
@@ -300,7 +301,7 @@ taxaprecision("Isodictya")
 
 4. *frequencyrank()*
 
-`frequencyrank()` ranks the frequency of a lower taxa belong to the same higher taxa
+`frequencyrank()` reports the frequencies of a lower taxa belong to the same higher taxa
 
 ```{r frequencyrank,echo = FALSE}
 frequencyrank <- function(taxa, rank) {
@@ -358,6 +359,6 @@ topn <- function(taxa, rank, n) {
 ```
 
 ```{r top n example}
-#example: return the 5 most frequent phyla of Animalia and reports their frequencies
+#example: return the 5 most frequent phyla of Animalia and reports their frequencies; n is a user-defined value.
 topn("Animalia", "Phylum", 5)
 ```
