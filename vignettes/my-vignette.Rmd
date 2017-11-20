@@ -362,3 +362,77 @@ topn <- function(taxa, rank, n) {
 #example: return the 5 most frequent phyla of Animalia and reports their frequencies; n is a user-defined value.
 topn("Animalia", "Phylum", 5)
 ```
+
+6. *OBIS_impresision()*
+
+*OBIS_imprecision()* computes the percentage of occurrences of a taxa unidentified to the species level
+
+```{r OBIS_imprecisionrate, echo = FALSE}
+OBIS_imprecisionrate <- function(taxa) {
+  dd <- robis::occurrence(taxa)$species
+  incomplete <- length(which(is.na(dd == TRUE)))
+  imprecisionrate <- incomplete / length(dd)
+  return(imprecisionrate)
+}
+```
+
+```{r OBIS_imprecisionrate example}
+#example: return the imprecision rate of "Abra".
+OBIS_imprecisionrate("Abra")
+```
+
+7. *alltaxalist()*
+
+*alltaxalist()* returns all taxa of all ranks in a dataset
+
+```{r taxalist, echo = FALSE}
+alltaxalist <- function(data_m) {
+  Kingdoms <- levels(data_m$Kingdoms)
+  Phyla <- levels(data_m$Phyla)
+  Classes <- levels(data_m$Classes)
+  Orders <- levels(data_m$Orders)
+  Families <- levels(data_m$Families)
+  Genera <- levels(data_m$Genera)
+  ranks <- c(rep("Kingdom", length(Kingdoms)), rep("Phylum", length(Phyla)), rep("Class", length(Classes)), rep("Order", length(Orders)), rep("Family", length(Families)), rep("Genus", length(Genera)))
+  taxa <- c(Kingdoms, Phyla, Classes, Orders, Families, Genera)
+  ddd <- data.frame(taxa, ranks)
+  colnames(ddd) <- c("taxa", "rank")
+  return(ddd)
+}
+```
+
+```{r alltaxalist example}
+#example: return all taxa in data_m
+alltaxa <- alltaxalist(data_m)
+alltaxa[c(10:20), ]
+```
+
+8. *spetaxalist()*
+
+*spetaxalist()* returns all taxa of one rank in a dataset
+
+```{r spetaxalist, echo = FALSE}
+spetaxalist <- function(data_m, rank) {
+  if(rank == "Kingdom") {
+    taxa = levels(data_m$Kingdoms)
+  } else if(rank == "Phylum") {
+    taxa = levels(data_m$Phyla)
+  } else if(rank == "Class") {
+    taxa = levels(data_m$Classes)
+  } else if(rank == "Order") {
+    taxa = levels(data_m$Orders)
+  } else if(rank == "Family") {
+    data_m$Families = as.factor(data_m$Families)
+    taxa = levels(data_m$Families)
+  } else if(rank == "Genus") {
+    taxa = levels(data_m$Genera)
+  }
+  return(taxa)
+}
+```
+
+```{r spetaxalist example}
+spelist <- spetaxalist(data_m, "Phylum")
+tail(spelist)
+```
+
