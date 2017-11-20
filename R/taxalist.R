@@ -1,4 +1,4 @@
-#'Return all taxa in a dataset
+#'Return all taxa of all ranks in a dataset
 #'
 #' @param data_m the dataset
 #' @return all taxa and ranks of a dataset
@@ -8,7 +8,7 @@
 #'}
 #'@export
 
-taxalist <- function(data_m) {
+alltaxalist <- function(data_m) {
   Kingdoms <- levels(data_m$Kingdoms)
   Phyla <- levels(data_m$Phyla)
   Classes <- levels(data_m$Classes)
