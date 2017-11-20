@@ -14,7 +14,8 @@ Imports:
     data.table,
     stringr,
     dplyr,
-    MASS
+    MASS,
+    robis
 Suggests:
     knitr,
     rmarkdown,
