@@ -3,6 +3,7 @@
 export(OBIS_imprecisionrate)
 export(frequencyrank)
 export(taxaaccum)
+export(taxalist)
 export(taxamodel)
 export(taxamodel_cor)
 export(taxamodel_test)

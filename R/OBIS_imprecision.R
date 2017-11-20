@@ -9,7 +9,7 @@
 #'@export
 
 OBIS_imprecisionrate <- function(taxa) {
-  dd <- occurrence(taxa)$species
+  dd <- robis::occurrence(taxa)$species
   incomplete <- length(which(is.na(dd == TRUE)))
   imprecisionrate <- incomplete / length(dd)
   return(imprecisionrate)
