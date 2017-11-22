@@ -39,7 +39,7 @@ Below is an example
 ```{r read in data and return dimension}
 #load the dataset of interest
 #check the dimension of the dataset
-library(biotaxa)
+library(biotaxataxa)
 dim(data_m)
 ```
 

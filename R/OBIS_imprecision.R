@@ -1,4 +1,4 @@
-#'Return the frequency ranking of an interested lower taxon based on a higher taxon
+#'Return the percentage of taxa occurrences unidentified to the finest taxa level (i.e. species)
 #'
 #' @param taxa A string.
 #' @return the percentage of taxa occurrences on OBIS
