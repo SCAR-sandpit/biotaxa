@@ -5,6 +5,8 @@
 #' @return table of accnumative numbers of \code{rank} of a \code{taxa}
 #' @import data.table
 #' @import graphics
+#' @import ggplot2
+#' @import plotly
 #'@examples
 #'\dontrun{
 #'taxaaccum("Animalia", "Phylum")
@@ -39,7 +41,16 @@ taxaaccum <- function(taxa, rank) {
   dt.out[, id := cummax(id)]
   numtaxa <- cummax(as.numeric(factor(dt$id)))
   taxa_dt <- aggregate(numtaxa, list(year = dt$year), max )
-  colnames(taxa_dt) <- c("year", "taxa count")
-  plot(taxa_dt$year, taxa_dt$`taxa count`, xlab = "Year", ylab = paste("Number of", ranklabel, sep = " "))
-  title(taxa)
+  colnames(taxa_dt) <- c("year", "taxacount")
+  minx <- min(as.vector(taxa_dt$year))
+  maxx <- max(as.vector(taxa_dt$year))
+  #return(c(minx, maxx))
+  #return(head(taxa_dt))
+  ylab = paste("Number of", ranklabel, sep = " ")
+  p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999")) + geom_point()
+  p <- p + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none")
+  p <- ggplotly(p)
+  p
+  #plot(taxa_dt$year, taxa_dt$`taxa count`, xlab = "Year", ylab = paste("Number of", ranklabel, sep = " "))
+  #title(taxa)
 }
