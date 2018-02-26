@@ -2,7 +2,7 @@
 % Please edit documentation in R/OBIS_imprecision.R
 \name{OBIS_imprecisionrate}
 \alias{OBIS_imprecisionrate}
-\title{Return the frequency ranking of an interested lower taxon based on a higher taxon}
+\title{Return the percentage of taxa occurrences unidentified to the finest taxa level (i.e. species)}
 \usage{
 OBIS_imprecisionrate(taxa)
 }
@@ -13,7 +13,7 @@ OBIS_imprecisionrate(taxa)
 the percentage of taxa occurrences on OBIS
 }
 \description{
-Return the frequency ranking of an interested lower taxon based on a higher taxon
+Return the percentage of taxa occurrences unidentified to the finest taxa level (i.e. species)
 }
 \examples{
 \dontrun{
