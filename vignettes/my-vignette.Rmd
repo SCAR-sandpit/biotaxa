@@ -1,4 +1,4 @@
----
+s---
 title: Biotaxa, a R package visualising taxonomic accumulation, measuring taxonomic precision and predicting taxonomic diversity
 author: "Hsun-Yi Hsieh"
 date: "`r Sys.Date()`"

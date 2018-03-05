@@ -5,7 +5,6 @@
 #' @param method A string.
 #' @return the correlation coefficient of a non-linear model of \code{taxa} ~ \code{rank}
 #' @import data.table
-#' @import graphics
 #'@examples
 #'\dontrun{
 #'taxaamodel_test("Animalia", "Phylum", "logistic")

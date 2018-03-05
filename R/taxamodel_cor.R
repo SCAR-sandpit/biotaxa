@@ -6,7 +6,6 @@
 #' @return the correlation coefficient of the \code{taxa} ~ \code{rank} \code{method} model.
 #' @import data.table
 #' @importFrom dplyr count
-#' @import graphics
 #' @import stats
 #'@examples
 #'\dontrun{
