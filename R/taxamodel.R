@@ -6,10 +6,10 @@
 #' @return an accumulative curve of taxa overlapped with a fitting curve of selected model
 #' @import data.table
 #' @importFrom dplyr count
-#' @import stats
+#' @importFrom stats getInitial
+#' @importFrom drm drc
 #' @import ggplot2
 #' @importFrom plotly ggplotly
-#' @import minpack.lm
 #' @examples
 #' \dontrun{
 #' taxamodel("Animalia", "Phylum", "logistic")
@@ -54,7 +54,7 @@ taxamodel <- function(taxa, rank, method) {
       N_obs <- taxa_dt$'taxa count'
       times <- as.numeric(taxa_dt$year)
 
-      SS<-getInitial(N_obs~SSlogis(times,alpha,xmid,scale),data=data.frame(N_obs=N_obs,times=times))
+      SS<-stats::getInitial(N_obs~SSlogis(times,alpha,xmid,scale),data=data.frame(N_obs=N_obs,times=times))
       K_start <- SS["alpha"]
       R_start <- 1/SS["scale"]
       N0_start <- SS["alpha"]/(exp(SS["xmid"]/SS["scale"])) + 1
@@ -92,40 +92,25 @@ taxamodel <- function(taxa, rank, method) {
 
       N_obs <- taxa_dt$'taxa count'
       times <- as.numeric(taxa_dt$year)
-      #ddd <- data.frame(N_obs, times)
-      #write.csv(ddd, "/Users/hhsieh/Desktop/ddd.csv", row.names = FALSE)
 
+      model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
+      summary(model.drm) # return d = Vm, e = K
+
+      #model.nls <- nls(N_obs ~ Vm * times / (K + times), data = data.frame(N_obs, times = times), start = list(K = max(N_obs)/2, Vm = max(N_obs)))
+      #summary(model.nls)
 
       #MM <- getInitial(N_obs~SSmicmen(times, Vm, K),data=data.frame(N_obs=N_obs,times=times))
 
       #Vm_start <- MM["Vm"]
       #K_start <- MM["K"]
       #return(c(Vm_start, K_start))
-
-      model <- nlsLM(N_obs ~ Vm * times / (K + times), start = list(K = max(N_obs)/2, Vm = max(N_obs)), trace = TRUE)
-      summary(model)
-
-
-      #model <- nlsLM(1/N_obs ~ K/(Vm * times) + 1/Vm, start = list(K = max(N_obs)/2, Vm = max(N_obs)), trace = TRUE)
-      #summary(model)
-
-      #model <- nls(1/N_obs ~ K/(Vm*times) + 1/Vm, start = list(K = max(N_obs)/2, Vm = max(N_obs)), trace = TRUE)
-      #summary(model)
-
-
-      #summary(model)
-
-
-      #model <- nls(N_obs ~ SSmicmen(times, Vmax, Km), data = data.frame(N_obs, times), alg = "port", nls.control(minFactor = 0.0000000001))
+      #return(MM)
 
 
 
-
-      #model <- try(nlsLM(N_obs ~ Vm * times / (K + times), start = list(Vm = Vm_start, K = K_start), control = list(maxiter = 500), trace = TRUE))
-
-      #corr_coef <- cor(N_obs, predict(model))
+      corr_coef <- cor(N_obs, predict(model.drm))
       #return(corr_coef)
-      #lines(times,predict(model),col="red",lty=2,lwd=2)
+      lines(times,predict(model.drm),col="red",lty=2,lwd=2)
       #n = length(times)
       ## add model predictions
       #a = summary(model)$coefficient[1]
@@ -142,7 +127,7 @@ taxamodel <- function(taxa, rank, method) {
       #lines(times, UP, col = 'red', lty = "dashed")
       #LW = (a - a_sd) * times / (b + b_sd + times)
       #lines(times, LW, col ='red', lty = 'dashed')
-      #return('correlation coefficient' = corr_coef)
+      return('correlation coefficient' = corr_coef)
     }
   }#, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))}
     )
