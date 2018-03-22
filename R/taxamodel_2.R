@@ -1,22 +1,4 @@
-#'Fitting the taxonomic accumulation of a given taxa with user-selected logistic or Michaelis-Menten model
-#'
-#' @param taxa A string.
-#' @param rank A string.
-#' @param method A string.
-#' @return an accumulative curve of taxa overlapped with a fitting curve of selected model
-#' @import data.table
-#' @importFrom dplyr count
-#' @importFrom stats getInitial
-#' @importFrom drm drc
-#' @import ggplot2
-#' @importFrom plotly ggplotly
-#' @examples
-#' \dontrun{
-#' taxamodel("Animalia", "Phylum", "logistic")
-#' }
-#' @export
-
-taxamodel <- function(taxa, rank, method) {
+taxamodel_2 <- function(taxa, rank, method) {
   tryCatch({
     df <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa |
         Orders == taxa | Families == taxa | Genera == taxa)
@@ -132,5 +114,5 @@ taxamodel <- function(taxa, rank, method) {
       #return('correlation coefficient' = corr_coef)
     }
   }#, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))}
-    )
+  )
 }

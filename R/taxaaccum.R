@@ -43,9 +43,9 @@ taxaaccum <- function(taxa, rank) {
   colnames(taxa_dt) <- c("year", "taxacount")
   minx <- min(as.vector(taxa_dt$year))
   maxx <- max(as.vector(taxa_dt$year))
-    ylab = paste("Number of", ranklabel, sep = " ")
+  ylab = paste("Number of", ranklabel, sep = " ")
   p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999")) + geom_point()
-  p <- p + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1))
+  p <- p + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
 
   p <- plotly::ggplotly(p)
   p
