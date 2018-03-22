@@ -29,8 +29,8 @@ taxamodel_2 <- function(taxa, rank, method) {
     numtaxa <- cummax(as.numeric(factor(dt$id)))
     taxa_dt <- aggregate(numtaxa, list(year = dt$year), max )
     colnames(taxa_dt) <- c("year", "taxa count")
-    plot(taxa_dt$year, taxa_dt$`taxa count`, xlab = "Year", ylab = paste("Number of", ranklabel, sep = " "), ylim = c(0, max(taxa_dt$"taxa count")*1.35))
-    title(taxa)
+    #plot(taxa_dt$year, taxa_dt$`taxa count`, xlab = "Year", ylab = paste("Number of", ranklabel, sep = " "), ylim = c(0, max(taxa_dt$"taxa count")*1.35))
+    #title(taxa)
 
     if(method == "logistic") {
       N_obs <- taxa_dt$'taxa count'

@@ -97,18 +97,21 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       N_obs <- taxa_dt$'taxacount'
       #times <- as.numeric(taxa_dt$year)
       #times <- as.numeric(levels(taxa_dt$year))
-      times <- as.numeric(as.vector.factor(taxa_dt$year))
+      times <- as.numeric(taxa_dt$year)
+      #return(times)
       #return(length(times))
+      #return(data.frame(N_obs, times))
 
 
       model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
-      summary(model.drm) # return d = Vm, e = K
-      #plot(model.drm)
+      #return(summary(model.drm)) # return d = Vm, e = K
+      plot(model.drm)
+      #return(confint(model.drm))
 
       corr_coef <- cor(N_obs, predict(model.drm))
       #return(corr_coef)
 
-      #return(summary(model.drm))
+
       #lines(times,predict(model.drm),col="red",lty=2,lwd=2)
       n = length(times)
       ## add model predictions
@@ -126,17 +129,17 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
 
       #return(c(a_sd, b_sd))
       # compute upper bounds of model prediction
-      UP = (a + a_sd) * times / (b - b_sd + times)
+      UP = (a - a_sd) * times / (b + b_sd + times)
       #lines(times, UP, col = 'red', lty = "dashed")
-      LW = (a - a_sd) * times / (b + b_sd + times)
-      #return(data.frame(UP, LW))
-      #summary(model.drm)
+      LW = (a + a_sd) * times / (b - b_sd + times)
+      return(data.frame(UP, LW))
+      #return(summary(model.drm))
 
-      p <- p + geom_line()
+      #p <- p + geom_line()
 
-      p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
+      #p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       #p <- plotly::ggplotly(p)
-      p
+      #p
       #
     }
   }#, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))}
