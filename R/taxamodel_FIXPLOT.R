@@ -108,7 +108,6 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
 
       p
     } else if (method == "MM-test") {
-
       N_obs <- taxa_dt$'taxacount'
       times <- c(taxa_dt$year)
 
@@ -131,7 +130,31 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
           data = pred,
           aes(x = times, ymin = Lower, ymax = Upper),
           alpha = 0.4);
+    } else if (method == "logis-test") {
 
+      N_obs <- taxa_dt$'taxacount'
+      times <- c(taxa_dt$year)
+
+      ryegrass.m1 <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
+
+      summary(ryegrass.m1)
+
+      pred <- as.data.frame(predict(
+        ryegrass.m1,
+        newdata = data.frame(N_obs = N_obs, times = times),
+        interval = "prediction", level = 0.95));
+      pred$times <- times;
+
+      data.frame(times = times, N_obs = N_obs) %>%
+        ggplot(aes(times, N_obs, colour = "#FF9999", group = 1)) +
+        geom_point() + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0))) +
+
+        geom_line(data = pred, aes(x = times, y = Prediction)) +
+        geom_ribbon(
+          data = pred,
+          aes(x = times, ymin = Lower, ymax = Upper),
+          linetype = 2,
+          alpha = 0.4);
     }
 
   }#, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))}
