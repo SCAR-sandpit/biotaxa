@@ -47,7 +47,6 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       newtimes <- times
       #return(newtimes)
       preds <- predict(model.drm, times = newtimes, interval = "prediction", level = 0.95)
-      #return(class(preds))
 
       LW = preds[,2]
       UP = preds[,3]
@@ -55,29 +54,6 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       p <- p + geom_line()
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       p
-    } else if (method == "MM-test") {
-      N_obs <- taxa_dt$'taxacount'
-      times <- c(taxa_dt$year)
-
-      fit <- drm(
-        formula = N_obs ~ times,
-        data = data.frame(N_obs = N_obs, times = times),
-        fct = MM.2())
-
-      pred <- as.data.frame(predict(
-        fit,
-        newdata = data.frame(N_obs = N_obs, times = times),
-        interval = "prediction", level = 0.95));
-      pred$times <- times;
-
-      data.frame(times = times, N_obs = N_obs) %>%
-        ggplot(aes(times, N_obs)) +
-        geom_point() +
-        geom_line(data = pred, aes(x = times, y = Prediction)) +
-        geom_ribbon(
-          data = pred,
-          aes(x = times, ymin = Lower, ymax = Upper),
-          alpha = 0.4);
     } else if (method == "logistic") {
 
       N_obs <- taxa_dt$'taxacount'
@@ -85,15 +61,12 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
 
       ryegrass.m1 <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
 
-      summary(ryegrass.m1)
-
       pred <- as.data.frame(predict(
         ryegrass.m1,
         newdata = data.frame(N_obs = N_obs, times = times),
         interval = "prediction", level = 0.95));
       pred$times <- times;
 
-      #return(pred)
       LW = pred[,2]
       UP = pred[,3]
 
