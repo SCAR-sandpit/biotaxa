@@ -47,7 +47,11 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       log_formula<-formula(N_obs ~ K * N0 * exp(R * times) / (K + N0 * (exp(R * times) - 1)))
       m<-nls(log_formula,start = list(K = K_start, R = R_start, N0 = N0_start), control = list(maxiter = 500), trace = FALSE)
       corr_coef <- cor(N_obs,predict(m))
-      #return(corr_coef)
+
+      #preds <- predict(m, newdata = data.frame(times = times, error = 0.05))
+      #return(preds)
+
+      #consult this page for confidence intervals (http://sia.webpopix.org/nonlinearRegression.html)
 
       n = length(times)
       K = summary(m)$coefficient[1]
@@ -86,8 +90,7 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
 
       N_obs <- taxa_dt$'taxacount'
       times <- c(taxa_dt$year)
-      #return(c(min(times), max(times)))
-      write.csv(data.frame(N_obs = N_obs, times = times), "/Users/hhsieh/Documents/R packages/biotaxa/testdata.csv", row.names = FALSE)
+
 
       model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
       newtimes <- times
@@ -98,17 +101,11 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
      LW = preds[,2]
      UP = preds[,3]
 
-
-      #summary(model.drm) # return d = Vm, e = K
-      #plot(model.drm)
-
       corr_coef <- cor(N_obs, predict(model.drm))
-      #return(corr_coef)
-      #lines(times,predict(model.drm),col="red",lty=2,lwd=2)
-      #n = length(times)
+
       p <- p + geom_line()
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
-      #p <- plotly::ggplotly(p)
+
       p
     } else if (method == "MM-test") {
 
@@ -137,10 +134,6 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
 
     }
 
-      else {
-        return("Check spellings of taxa, rank or method")
-      }
   }#, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))}
   )
 }
-
