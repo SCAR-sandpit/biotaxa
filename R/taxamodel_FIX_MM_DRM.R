@@ -29,23 +29,15 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
     numtaxa <- cummax(as.numeric(factor(dt$id)))
     taxa_dt <- aggregate(numtaxa, list(year = dt$year), max )
     colnames(taxa_dt) <- c("year", "taxacount")
-    #return(taxa_dt)
-    #plot(taxa_dt$year, taxa_dt$`taxa count`, xlab = "Year", ylab = paste("Number of", ranklabel, sep = " "), ylim = c(0, max(taxa_dt$"taxa count")*1.35))
-    #title(taxa)
     minx <- min(as.vector(taxa_dt$year))
     maxx <- max(as.vector(taxa_dt$year))
     ylab = paste("Number of", ranklabel, sep = " ")
     p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999", group = 1)) + geom_point()
     p <- p + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
 
-    #p <- plotly::ggplotly(p)
-    #p
-
-    if(method == "logistic") {
+      if(method == "logistic") {
       N_obs <- taxa_dt$'taxacount'
-      #N_obs <- numtaxa
       times <- as.numeric(taxa_dt$year)
-
 
       SS<-stats::getInitial(N_obs~SSlogis(times,alpha,xmid,scale),data=data.frame(N_obs=N_obs,times=times))
       K_start <- SS["alpha"]
@@ -58,7 +50,6 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       corr_coef <- cor(N_obs,predict(m))
       lines(times,predict(m),col="red",lty=2,lwd=2)
       n = length(times)
-
 
       K = summary(m)$coefficient[1]
       R = summary(m)$coefficient[2]
