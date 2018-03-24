@@ -49,7 +49,8 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
     minx <- min(as.vector(taxa_dt$year))
     maxx <- max(as.vector(taxa_dt$year))
     ylab = paste("Number of", ranklabel, sep = " ")
-    p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999", group = 1)) + geom_point()
+    p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999", group = 1
+      )) + geom_point(colour = "cornflowerblue")
     p <- p + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
 
     if(method == "Michaelis-Menten") {
@@ -64,12 +65,14 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       newtimes <- times
       #return(newtimes)
       preds <- suppressWarnings(predict(model.drm, times = newtimes, interval = "prediction", level = 0.95))
+      #return(preds)
 
       LW = preds[,2]
       UP = preds[,3]
       corr_coef <- cor(N_obs, predict(model.drm))
-      p <- p + geom_line()
+      p <- p + geom_line(data = data.frame(preds, taxa_dt$year), aes(taxa_dt$year, Prediction), colour = "#FF9999")
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
+
       p
     } else if (method == "logistic") {
 
@@ -87,7 +90,7 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       LW = pred[,2]
       UP = pred[,3]
 
-      p <- p + geom_line()
+      p <- p + geom_line(data = data.frame(pred, taxa_dt$year), aes(taxa_dt$year, Prediction), colour = "#FF9999")
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       p
     }
