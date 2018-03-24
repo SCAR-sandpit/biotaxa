@@ -43,10 +43,12 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       N_obs <- taxa_dt$'taxacount'
       times <- c(taxa_dt$year)
 
+
       model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
+
       newtimes <- times
       #return(newtimes)
-      preds <- predict(model.drm, times = newtimes, interval = "prediction", level = 0.95)
+      preds <- suppressWarnings(predict(model.drm, times = newtimes, interval = "prediction", level = 0.95))
 
       LW = preds[,2]
       UP = preds[,3]
@@ -61,10 +63,10 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
 
       ryegrass.m1 <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
 
-      pred <- as.data.frame(predict(
+      pred <- suppressWarnings(as.data.frame(predict(
         ryegrass.m1,
         newdata = data.frame(N_obs = N_obs, times = times),
-        interval = "prediction", level = 0.95));
+        interval = "prediction", level = 0.95)));
       pred$times <- times;
 
       LW = pred[,2]
