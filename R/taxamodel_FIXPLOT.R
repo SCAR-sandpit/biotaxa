@@ -3,11 +3,10 @@
 #' @param taxa A string.
 #' @param rank A string.
 #' @param method A string.
-#' @return modeling result of the accumulation of \code{rank} of a \code{taxa}
+#' @return modeling result of the accumulation of \code{rank} of a \code{taxa} by \code{method}
 #' @import data.table
 #' @import ggplot2
-#' @import drc drm
-#' @importFrom plotly ggplotly
+#' @importFrom drc drm
 #'@examples
 #'\dontrun{
 #'taxamodel_FIXPlOT("Animalia", "Genus", "logistic")
@@ -60,7 +59,7 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       N_obs <- taxa_dt$'taxacount'
       times <- c(taxa_dt$year)
 
-      model.drm <- drc::drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
+      model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
 
       newtimes <- times
       #return(newtimes)
@@ -77,7 +76,7 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       N_obs <- taxa_dt$'taxacount'
       times <- c(taxa_dt$year)
 
-      ryegrass.m1 <- drc::drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
+      ryegrass.m1 <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
 
       pred <- suppressWarnings(as.data.frame(predict(
         ryegrass.m1,

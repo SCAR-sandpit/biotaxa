@@ -7,9 +7,8 @@
 #' @import data.table
 #' @importFrom dplyr count
 #' @importFrom stats getInitial
-#' @importFrom drm drc
+#' @importFrom drc drm
 #' @import ggplot2
-#' @importFrom plotly ggplotly
 #' @examples
 #' \dontrun{
 #' taxamodel("Animalia", "Phylum", "logistic")
