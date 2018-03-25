@@ -2,10 +2,9 @@
 #'
 #' @param taxa A string.
 #' @param rank A string.
-#' @return table of accnumative numbers of \code{rank} of a \code{taxa}
+#' @return accumulation curve of \code{rank} of a \code{taxa}
 #' @import data.table
 #' @import ggplot2
-#' @importFrom plotly ggplotly
 #'@examples
 #'\dontrun{
 #'taxaaccum("Animalia", "Phylum")
@@ -44,11 +43,9 @@ taxaaccum <- function(taxa, rank) {
   minx <- min(as.vector(taxa_dt$year))
   maxx <- max(as.vector(taxa_dt$year))
   ylab = paste("Number of", ranklabel, sep = " ")
-  p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999")) + geom_point()
+  p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999")) + geom_point(colour = "cornflowerblue")
   p <- p + labs(x = "Year", y = ylab) + ggtitle(taxa) + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
 
-  p <- plotly::ggplotly(p)
   p
-  #plot(taxa_dt$year, taxa_dt$`taxa count`, xlab = "Year", ylab = paste("Number of", ranklabel, sep = " "))
-  #title(taxa)
+
 }

@@ -12,7 +12,7 @@ taxaaccum(taxa, rank)
 \item{rank}{A string.}
 }
 \value{
-table of accnumative numbers of \code{rank} of a \code{taxa}
+accumulation curve of \code{rank} of a \code{taxa}
 }
 \description{
 Report the accumulative numbers of a rank of a given taxa overtime
