@@ -62,9 +62,7 @@ taxamodel_FIXPLOT <- function(taxa, rank, method) {
       model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
 
       newtimes <- times
-      #return(newtimes)
       preds <- suppressWarnings(predict(model.drm, times = newtimes, interval = "prediction", level = 0.95))
-      #return(preds)
 
       LW = preds[,2]
       UP = preds[,3]
