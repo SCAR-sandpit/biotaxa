@@ -1,0 +1,70 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww20480\viewh16360\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 > library(biotaxa)\
+> taxaaccum(taxa = "Animalia", rank = "Genus") #visualise the accumulation curve of all genera of Animalia\
+> taxamodel(taxa = "Animalia", rank = "Genus", method = "logistic") # visualise the accumulation curve and explain the growth of the taxonomic diversity based on a logistic equation. The model explains 99.89% of the variation\
+[1] 0.9989224\
+> taxamodel_cor(taxa = "Animalia", rank = "Genus", method = "logistic") #yield the correlation coefficient of model prediction\
+$taxa\
+[1] "Animalia"\
+\
+$rank\
+[1] "Genus"\
+\
+$method\
+[1] "logistic"\
+\
+$corr_coef\
+[1] 0.9989224\
+\
+> frequencyrank("Plantae", "Phylum") #rank the size of phyla in Plantae\
+                  Phylum freq\
+6             Rhodophyta  845\
+4            Chlorophyta  533\
+3             Charophyta   66\
+7           Tracheophyta   21\
+2              Bryophyta    6\
+5 Plantae incertae sedis    6\
+1                           1\
+> topn("Animalia", "Phylum", 5) #what are the n biggest phyla in Animalia?\
+          Phylum freq\
+3     Arthropoda 9141\
+17      Mollusca 6367\
+8       Chordata 4492\
+9       Cnidaria 2903\
+12 Echinodermata 2686\
+> OBIS_imprecisionrate("Abra") #How much occurrences of \'91Abra\'92 on OBIS are not identified to species? Only 2.8%\
+Retrieved 63285 records of 63285 (100%)\
+[1] 0.02833215\
+> alltaxa <- alltaxalist(data_m) #return all taxa in one dataset\
+> alltaxa[c(1:19),]\
+                   taxa    rank\
+1              Animalia Kingdom\
+2               Archaea Kingdom\
+3              Bacteria Kingdom\
+4  Biota incertae sedis Kingdom\
+5             Chromista Kingdom\
+6                 Fungi Kingdom\
+7                Monera Kingdom\
+8  P. Micheli ex Haller Kingdom\
+9              Plantae Kingdom\
+10             Protozoa Kingdom\
+11                       Phylum\
+12                 1768  Phylum\
+13       Acanthocephala  Phylum\
+14        Acidobacteria  Phylum\
+15       Actinobacteria  Phylum\
+16            Amoebozoa  Phylum\
+17             Annelida  Phylum\
+18             Apusozoa  Phylum\
+19           Arthropoda  Phylum\
+\
+> spelist <- spetaxalist(data_m, "Phylum") #returns all taxa of one rank in a dataset\
+> tail(spelist)\
+[1] "Tenericutes"     "Thermotogae"     "Tracheophyta"   \
+[4] "Verrucomicrobia" "Xenacoelomorpha" "Zygomycota" }
