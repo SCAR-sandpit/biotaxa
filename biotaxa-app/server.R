@@ -175,6 +175,23 @@ shinyServer(function(input, output) {
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       p
 
+    } else if(input$fitting == "Asymtopic_Regression_Model") {
+      N_obs <- taxa_dt$'taxacount'
+      times <- as.numeric(taxa_dt$year)
+
+      model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = AR.3())
+
+      newtimes <- times
+      preds <- suppressWarnings(predict(model.drm, times = newtimes, interval = "prediction", level = 0.95))
+
+      #preds <- predict(model.drm, times = newtimes, interval = "prediction", level = 0.95)
+
+      LW = preds[,2]
+      UP = preds[,3]
+
+      p <- p + geom_line(data = data.frame(preds, taxa_dt$year), aes(taxa_dt$year, Prediction), colour = "#FF9999")
+      p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
+      p
     }
   })
 

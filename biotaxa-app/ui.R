@@ -49,7 +49,9 @@ shinyUI(fluidPage(
       radioButtons("fitting", "Fitting Curve",
                     choices = c(None = "no curve",
                                 logistic = "logistic",
-                                Michaelis_Menten = "Michaelis_Menten"),
+                                Michaelis_Menten = "Michaelis_Menten",
+                                Asymtopic_Regression_Model = "Asymtopic_Regression_Model"
+                      ),
                     selected = "no curve")
 
       #actionButton("newplot", "Update View")
