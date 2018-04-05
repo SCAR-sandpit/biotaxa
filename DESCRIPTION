@@ -15,7 +15,9 @@ Imports:
     stringr,
     dplyr,
     MASS,
-    robis
+    robis,
+    drc,
+    ggplot2
 Suggests:
     knitr,
     rmarkdown,

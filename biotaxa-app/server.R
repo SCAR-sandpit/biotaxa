@@ -1,15 +1,15 @@
 #setwd("/Users/hhsieh/Documents/ANTABIS/RASp/RAS species list/Three Bigs")
 #data <- read.csv("data_m.csv", sep = ",", header = T, row.names = NULL)
 
-list.of.packages <- c("ggplot2", "data.table", "shiny", "drc", "dplyr")
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#list.of.packages <- c("ggplot2", "data.table", "shiny", "drc", "dplyr")
+#new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
 
-library(data.table)
-library(shiny)
-library(ggplot2)
-library(drc)
+#library(data.table)
+#library(shiny)
+#library(ggplot2)
+
 
 shinyServer(function(input, output) {
   #viewData <- reactive({
@@ -128,7 +128,8 @@ shinyServer(function(input, output) {
     maxy <- max(as.vector(taxa_dt$taxacount))
 
     ylab = paste("Number of", ranklabel, sep = " ")
-    p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999", group = 1)) + geom_point(colour = "cornflowerblue")  + theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (22)), legend.position = "right", axis.text.x = element_text(angle = 60, hjust = 1, size = 12), axis.text.y = element_text(angle = 60, hjust = 1, size = 12), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0), size = 16), axis.title.x = element_text(size = 16))
+    p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999"
+        , group = 1)) + geom_point(colour = "cornflowerblue")  + theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (22)), legend.position = "right", axis.text.x = element_text(angle = 60, hjust = 1, size = 12), axis.text.y = element_text(angle = 60, hjust = 1, size = 12), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0), size = 16), axis.title.x = element_text(size = 16))
     p <- p +  labs(title = plt_title, x = "Year", y = ylab)
 
     #p <- p + labs(x = "Year", y = ylab)
@@ -188,6 +189,7 @@ shinyServer(function(input, output) {
 
       LW = preds[,2]
       UP = preds[,3]
+
 
       p <- p + geom_line(data = data.frame(preds, taxa_dt$year), aes(taxa_dt$year, Prediction), colour = "#FF9999")
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)

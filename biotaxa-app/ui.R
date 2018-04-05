@@ -44,7 +44,7 @@ shinyUI(fluidPage(
 
       textInput("taxa", "Enter taxa:","Animalia"),
       textInput("rank", "Enter rank:","Phylum"),
-      helpText("By selecting fitting curve, you choose to visualise the fitting curve and prediction intervals of a logistic or a Michaelis-Menten regression model."),
+      helpText("By selecting fitting curve, you choose to visualise the fitting curve and the  prediction intervals of a logistic or a Michaelis-Menten regression model."),
       #checkboxInput("model", label = "fitting curve (logistic regression)", value = FALSE)#,
       radioButtons("fitting", "Fitting Curve",
                     choices = c(None = "no curve",

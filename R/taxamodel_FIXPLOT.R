@@ -6,7 +6,7 @@
 #' @return modeling result of the accumulation of \code{rank} of a \code{taxa} by \code{method}
 #' @import data.table
 #' @import ggplot2
-#' @importFrom drc drm
+#' @import drc
 #'@examples
 #'\dontrun{
 #'taxamodel_FIXPlOT("Animalia", "Genus", "logistic")
