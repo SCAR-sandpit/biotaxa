@@ -194,9 +194,9 @@ taxamodel <- function(taxa, rank, method) {
 taxamodel("Animalia", "Phylum", "logistic")
 ```
 
-3. *taxamodel_cor()*
+3. *taxamodel_corr()*
 
-`taxamodel_cor()` yields the correlation coefficient of the selected model. Although a model may present a high correlation coefficient between the real data and the predictions, a high correlation coefficient does not necessarily mean a goodness of fit. Visualisation can help the selection of a good model.
+`taxamodel_corr()` yields the correlation coefficient of the selected model. Although a model may present a high correlation coefficient between the real data and the predictions, a high correlation coefficient does not necessarily mean a goodness of fit. Visualisation can help the selection of a good model.
 
 ```{r taxa model cor, echo = FALSE}
 taxamodel_cor <- function(taxa, rank, method) {
@@ -257,7 +257,7 @@ taxamodel_cor <- function(taxa, rank, method) {
 
 ```{r taxamodel_cor}
 #example
-taxamodel_cor(taxa = "Animalia", rank = "Genus", method = "logistic")
+taxamodel_corr(taxa = "Animalia", rank = "Genus", method = "logistic")
 ```
 
 4. *taxaprecision()*
