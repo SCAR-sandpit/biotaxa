@@ -47,7 +47,7 @@ taxamodel_cor <- function(taxa, rank, method) {
     times <- as.numeric(taxa_dt$year)
     if(method == "logistic") {
 
-      ryegrass.m1 <- supperssWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4()))
+      ryegrass.m1 <- suppressWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4()))
       corr_coef <- cor(N_obs, predict(ryegrass.m1))
       res <- list(taxa=taxa, rank=rank, method=method, corr_coef=corr_coef)
       return(res)

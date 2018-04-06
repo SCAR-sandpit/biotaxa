@@ -228,36 +228,36 @@ taxamodel_cor <- function(taxa, rank, method) {
     dt.out[, id := cummax(id)]
     numtaxa <- cummax(as.numeric(factor(dt$id)))
     taxa_dt <- aggregate(numtaxa, list(year = dt$year), max )
-    colnames(taxa_dt) <- c("year", "taxa count")
-    N_obs <- taxa_dt$'taxa count'
+    colnames(taxa_dt) <- c("year", "taxacount")
+    N_obs <- taxa_dt$'taxacount'
     times <- as.numeric(taxa_dt$year)
     if(method == "logistic") {
-      SS<-getInitial(N_obs~SSlogis(times,alpha,xmid,scale),data=data.frame(N_obs=N_obs,times=times))
-      K_start <- SS["alpha"]
-      R_start <- 1/SS["scale"]
-      N0_start <- SS["alpha"]/(exp(SS["xmid"]/SS["scale"])) + 1
-      log_formula<-formula(N_obs ~ K * N0 * exp(R * times) / (K + N0 * (exp(R * times) - 1)))
-      m<-nls(log_formula,start = list(K = K_start, R = R_start, N0 = N0_start))
-      corr_coef <- cor(N_obs,predict(m))
+
+      ryegrass.m1 <- suppressWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4()))
+      corr_coef <- cor(N_obs, predict(ryegrass.m1))
       res <- list(taxa=taxa, rank=rank, method=method, corr_coef=corr_coef)
       return(res)
+
     } else if(method == "Michaelis-Menten") {
-      MM <- getInitial(N_obs~SSmicmen(times, Vm, K),data=data.frame(N_obs=N_obs,times=times))
-      Vm_start <- MM["Vm"]
-      K_start <- MM["K"]
-      model <- nls(N_obs ~ Vm * times / (K + times), start = list(Vm = Vm_start, K = K_start))
-      corr_coef <- cor(N_obs, predict(model))
+      model.drm <- suppressWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2()))
+
+      corr_coef <- cor(N_obs, predict(model.drm))
+      res <- list(taxa=taxa, rank=rank, method=method, corr_coef=corr_coef)
+      return(res)
+    } else if(method == "Asymtopic_Regression_Model") {
+      model.drm <- suppressWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = AR.3()))
+      corr_coef <- cor(N_obs, predict(model.drm))
       res <- list(taxa=taxa, rank=rank, method=method, corr_coef=corr_coef)
       return(res)
     }
-  }, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))})
+  }#, error = function(e) {list(taxa = taxa, rank = rank, method = method, corr_coef = cat("model fails to converge", "\n"))}
+    )
 }
-
 ```
 
 ```{r taxamodel_cor}
 #example
-taxamodel_cor(taxa = "Animalia", rank = "Class", method = "logistic")
+taxamodel_cor(taxa = "Animalia", rank = "Genus", method = "logistic")
 ```
 
 4. *taxaprecision()*
