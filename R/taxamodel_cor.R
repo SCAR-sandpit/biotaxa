@@ -14,7 +14,7 @@
 #'}
 #'@export
 
-taxamodel_cor <- function(taxa, rank, method) {
+taxamodel_corr <- function(taxa, rank, method) {
   tryCatch({
     df <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa | Orders == taxa | Families == taxa | Genera == taxa)
     dt = as.data.table(unique(df))
