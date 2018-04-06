@@ -6,9 +6,9 @@
 #' @return an accumulative curve of taxa overlapped with a fitting curve of selected model
 #' @import data.table
 #' @importFrom dplyr count
-#' @importFrom stats getInitial
 #' @import drc
 #' @import ggplot2
+#' @importFrom stats predict
 #' @examples
 #' \dontrun{
 #' taxamodel("Animalia", "Phylum", "logistic")

@@ -6,7 +6,8 @@
 #' @return the correlation coefficient of the \code{taxa} ~ \code{rank} \code{method} model.
 #' @import data.table
 #' @importFrom dplyr count
-#' @import stats
+#' @importFrom stats predict
+#' @importFrom stats cor
 #'@examples
 #'\dontrun{
 #'taxamodeo_cor("Animalia", "Phylum", "logistic")
@@ -59,7 +60,7 @@ taxamodel_cor <- function(taxa, rank, method) {
       res <- list(taxa=taxa, rank=rank, method=method, corr_coef=corr_coef)
       return(res)
     } else if(method == "Asymtopic_Regression_Model") {
-      model.drm <- suppressWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = AR.3()))
+      model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = AR.3())
       corr_coef <- cor(N_obs, predict(model.drm))
       res <- list(taxa=taxa, rank=rank, method=method, corr_coef=corr_coef)
       return(res)
