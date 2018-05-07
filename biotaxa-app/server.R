@@ -1,14 +1,16 @@
 #setwd("/Users/hhsieh/Documents/ANTABIS/RASp/RAS species list/Three Bigs")
 #data <- read.csv("data_m.csv", sep = ",", header = T, row.names = NULL)
 
-#list.of.packages <- c("ggplot2", "data.table", "shiny", "drc", "dplyr")
-#new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-#if(length(new.packages)) install.packages(new.packages)
+list.of.packages <- c("ggplot2", "data.table", "shiny", "drc", "dplyr")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
 
-#library(data.table)
-#library(shiny)
-#library(ggplot2)
+library(data.table)
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(drc)
 
 
 shinyServer(function(input, output) {
@@ -85,11 +87,9 @@ shinyServer(function(input, output) {
   output$taxacurve <- renderPlot({
 
     req(input$file1)
-
     df <- read.csv(input$file1$datapath,
       header = input$header,
       sep = input$sep)
-
     df <- subset(df, Kingdoms == input$taxa | Phyla == input$taxa | Classes == input$taxa | Orders == input$taxa | Families == input$taxa | Genera == input$taxa)
     dt = as.data.table(unique(df))
     setkey(dt, "year")
@@ -128,21 +128,16 @@ shinyServer(function(input, output) {
     maxy <- max(as.vector(taxa_dt$taxacount))
 
     ylab = paste("Number of", ranklabel, sep = " ")
-    p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999"
-        , group = 1)) + geom_point(colour = "cornflowerblue")  + theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (22)), legend.position = "right", axis.text.x = element_text(angle = 60, hjust = 1, size = 12), axis.text.y = element_text(angle = 60, hjust = 1, size = 12), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0), size = 16), axis.title.x = element_text(size = 16))
-    p <- p +  labs(title = plt_title, x = "Year", y = ylab)
 
-    #p <- p + labs(x = "Year", y = ylab)
-    #+ ggtitle(title)
-    #p <- p + scale_x_discrete(breaks = c(seq(minx, maxx, 25))) + theme(legend.position = "none", axis.text.x = element_text(angle = 60, hjust = 1), axis.text.y = element_text(angle = 60, hjust = 1), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
+    N_obs <- taxa_dt$'taxacount'
+    times <- as.numeric(taxa_dt$year)
+    p <- ggplot(taxa_dt, aes(x = year, y = taxacount, colour = "#FF9999"
+        , group = 1)) + geom_point(colour = "cornflowerblue")  + theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (32)), legend.position = "right", axis.text.x = element_text(angle = 60, hjust = 1, size = 22), axis.text.y = element_text(angle = 60, hjust = 1, size = 22), axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0), size = 26), axis.title.x = element_text(size = 26))
+    p <- p +  labs(title = plt_title, x = "Year", y = ylab)
 
     if (input$fitting == "no curve") {
       p
-
     } else if(input$fitting == "logistic") {
-
-      N_obs <- taxa_dt$'taxacount'
-      times <- as.numeric(taxa_dt$year)
 
       ryegrass.m1 <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
 
@@ -159,13 +154,11 @@ shinyServer(function(input, output) {
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       p
     } else if(input$fitting == "Michaelis_Menten") {
-      N_obs <- taxa_dt$'taxacount'
-      times <- as.numeric(taxa_dt$year)
 
       model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = MM.2())
 
-      newtimes <- times
-      preds <- suppressWarnings(predict(model.drm, times = newtimes, interval = "prediction", level = 0.95))
+      #newtimes <- times
+      preds <- suppressWarnings(predict(model.drm, times = times, interval = "prediction", level = 0.95))
 
       LW = preds[,2]
       UP = preds[,3]
@@ -177,13 +170,10 @@ shinyServer(function(input, output) {
       p
 
     } else if(input$fitting == "Asymtopic_Regression_Model") {
-      N_obs <- taxa_dt$'taxacount'
-      times <- as.numeric(taxa_dt$year)
 
       model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = AR.3())
 
-      newtimes <- times
-      preds <- suppressWarnings(predict(model.drm, times = newtimes, interval = "prediction", level = 0.95))
+      preds <- suppressWarnings(predict(model.drm, times = times, interval = "prediction", level = 0.95))
 
       #preds <- predict(model.drm, times = newtimes, interval = "prediction", level = 0.95)
 
@@ -196,6 +186,7 @@ shinyServer(function(input, output) {
       p
     }
   })
+
 
 })
 

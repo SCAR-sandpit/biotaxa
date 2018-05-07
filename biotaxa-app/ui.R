@@ -59,7 +59,8 @@ shinyUI(fluidPage(
     mainPanel(
       tableOutput("dataview"),
       plotOutput("taxacurve"),
-      plotOutput("fittingcurve")
+      plotOutput("fittingcurve"),
+      downloadButton("downloadPlot", "Download")
     )
 )
 ))
