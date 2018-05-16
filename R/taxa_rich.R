@@ -54,7 +54,7 @@ taxa_rich <- function(taxa, rank) {
     maxi = round(coef(summary(model))[3], digits = 0)
     rest = maxi - max_found
     #rest = maxi = max_obs
-    phase1 = "Based on the dataset, a logistic regression model predicts there exists"
+    phase1 = "A logistic regression model predicts there exists"
     phase2 = "of"
     phase3 = "in this region."
     phase4 = "have been found and"
