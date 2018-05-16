@@ -76,10 +76,10 @@ taxamodel <- function(taxa, rank, method) {
       N_obs <- taxa_dt$'taxacount'
       times <- c(taxa_dt$year)
 
-      model.drm <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
+      ryegrass.m1 <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
 
       pred <- suppressWarnings(as.data.frame(predict(
-        model.drm,
+        ryegrass.m1,
         newdata = data.frame(N_obs = N_obs, times = times),
         interval = "prediction", level = 0.95)));
       pred$times <- times;
@@ -90,7 +90,6 @@ taxamodel <- function(taxa, rank, method) {
       p <- p + geom_line(data = data.frame(pred, taxa_dt$year), aes(taxa_dt$year, Prediction), colour = "#FF9999")
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       p
-
     } else if(method == "Asymtopic_Regression_Model") {
       N_obs <- taxa_dt$'taxacount'
       times <- as.numeric(taxa_dt$year)

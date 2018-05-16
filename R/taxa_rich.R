@@ -49,17 +49,23 @@ taxa_rich <- function(taxa, rank) {
     N_obs <- taxa_dt$'taxacount'
     times <- c(taxa_dt$year)
 
-    model <- drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4())
+    model <- suppressWarnings(drm(N_obs ~ times, data = data.frame(N_obs = N_obs, times = times), fct = L.4()))
 
     maxi = round(coef(summary(model))[3], digits = 0)
     rest = maxi - max_found
+
     #rest = maxi = max_obs
     phase1 = "A logistic regression model predicts there exists"
     phase2 = "of"
     phase3 = "in this region."
     phase4 = "have been found and"
-    phase5 = "remain to be discovered"
-    complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, rest, ranklabel, phase5, sep = " ")
+    phase5 = "remain to be discovered."
+    phase6 = "remains to be discovered."
+    if(rest > 0) {
+      complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, rest, phase5, sep = " ")
+    } else {
+      complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, "none", phase6, sep = " ")
+    }
     return(complete_phase)
   }#, error = function(e) {list(taxa = taxa, rank = rankabel, method = method, corr_coef = cat("model fails to converge", "\n"))}
   )
