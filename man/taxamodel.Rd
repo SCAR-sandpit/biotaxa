@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxamodel.R
 \name{taxamodel}
 \alias{taxamodel}
-\title{Fitting the taxonomic accumulation of a given taxa with user-selected logistic or Michaelis-Menten model}
+\title{Fitting the taxonomic accumulation of a given taxa with user-selected logistic,  Michaelis-Menten or asymtopic regression model model}
 \usage{
 taxamodel(taxa, rank, method)
 }
@@ -17,7 +17,7 @@ taxamodel(taxa, rank, method)
 an accumulative curve of taxa overlapped with a fitting curve of selected model
 }
 \description{
-Fitting the taxonomic accumulation of a given taxa with user-selected logistic or Michaelis-Menten model
+Fitting the taxonomic accumulation of a given taxa with user-selected logistic,  Michaelis-Menten or asymtopic regression model model
 }
 \examples{
 \dontrun{

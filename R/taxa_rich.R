@@ -4,10 +4,8 @@
 #' @param rank A string.
 #' @return the predicted value of taxa richness (of given rank) based on logistic regression model
 #' @import data.table
-#' @importFrom dplyr count
 #' @importFrom stats getInitial
 #' @import drc
-#' @import ggplot2
 #' @examples
 #' \dontrun{
 #' taxa_rich("Animalia", "Phylum")
