@@ -1,4 +1,4 @@
-#'Fitting the taxonomic accumulation of a given taxa with user-selected logistic or Michaelis-Menten model
+#'Fitting the taxonomic accumulation of a given taxa with user-selected logistic,  Michaelis-Menten or asymtopic regression model model
 #'
 #' @param taxa A string.
 #' @param rank A string.
