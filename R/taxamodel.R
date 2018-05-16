@@ -90,6 +90,7 @@ taxamodel <- function(taxa, rank, method) {
       p <- p + geom_line(data = data.frame(pred, taxa_dt$year), aes(taxa_dt$year, Prediction), colour = "#FF9999")
       p <- p + geom_ribbon(aes(ymin = LW, ymax = UP), linetype = 2, alpha = 0.1)
       p
+      #return(summary(ryegrass.m1))
     } else if(method == "Asymtopic_Regression_Model") {
       N_obs <- taxa_dt$'taxacount'
       times <- as.numeric(taxa_dt$year)
