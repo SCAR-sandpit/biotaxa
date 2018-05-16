@@ -16,6 +16,7 @@
 #'
 taxa_rich <- function(taxa, rank) {
   tryCatch({
+    data_m <- subset(data_m, Kingdoms != "" & Phyla != "" & Classes != "" & Orders != "" & Families != "" & Genera != "" & AphiaIDs != "")
     df <- subset(data_m, Kingdoms == taxa | Phyla == taxa | Classes == taxa | Orders == taxa | Families == taxa | Genera == taxa)
     dt = as.data.table(unique(df))
     setkey(dt, "year")
