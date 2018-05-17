@@ -60,12 +60,14 @@ taxa_rich <- function(taxa, rank) {
     phase4 = "have been found and"
     phase5 = "remain to be discovered."
     phase6 = "remains to be discovered."
-    if(rest > 0) {
+    if(rest > 1) {
       complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, rest, phase5, sep = " ")
-    } else {
+    } else if (rest < 1) {
       complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, "none", phase6, sep = " ")
+    } else {
+      complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, rest, phase6, sep = " ")
     }
-    return(complete_phase)
+    return(writeLines(complete_phase))
   }#, error = function(e) {list(taxa = taxa, rank = rankabel, method = method, corr_coef = cat("model fails to converge", "\n"))}
   )
 }
