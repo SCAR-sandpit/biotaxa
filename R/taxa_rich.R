@@ -67,7 +67,7 @@ taxa_rich <- function(taxa, rank) {
     } else {
       complete_phase = paste(phase1, maxi, ranklabel, phase2, taxa, phase3, max_found, ranklabel, phase4, rest, phase6, sep = " ")
     }
-    return(writeLines(complete_phase))
+    return(complete_phase)
   }#, error = function(e) {list(taxa = taxa, rank = rankabel, method = method, corr_coef = cat("model fails to converge", "\n"))}
   )
 }

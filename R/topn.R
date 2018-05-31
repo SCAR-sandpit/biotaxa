@@ -2,6 +2,7 @@
 #' @param taxa A string.
 #' @param rank A string.
 #' @param n A number.
+#' @import dplyr
 #' @return a frequency dataframe of \code{rank}
 #' @examples
 #'\dontrun{

@@ -1,0 +1,136 @@
+---
+title: "Exploring biotaxa"
+author: "Hsun-Yi Hsieh"
+date: "5/30/2018"
+output: html_document
+runtime: shiny
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This page evaluates the relationship between predicted and actual species richness of well-studiex phyla in Animalia.
+
+First, explore the most frequently recorded phyla in Animalia
+```{r, echo = TRUE, eval = TRUE}
+library(shiny)
+library(biotaxa)
+library(dplyr)
+topphyla <- topn("Animalia", "Phylum", 12)
+topphyla
+```
+
+Take looks of their discovery curves and how well logistic regressions fit.
+```{r, echo = TRUE}
+library(biotaxa)
+
+taxamodel("Arthropoda", "Species", "logistic")
+taxamodel("Mollusca", "Species", "logistic")
+taxamodel("Chordata", "Species", "logistic")
+taxamodel("Cnidaria", "Species", "logistic")
+taxamodel("Echinodermata", "Species", "logistic")
+taxamodel("Annelida", "Species", "logistic")
+taxamodel("Bryozoa", "Species", "logistic")
+taxamodel("Porifera", "Species", "logistic")
+taxamodel("Nematoda", "Species", "logistic")
+taxamodel("Brachiopoda", "Species", "logistic")
+taxamodel("Nemertea", "Species", "logistic")
+taxamodel("Platyhelminthes", "Species", "logistic")
+
+```
+
+add the most frequently-studied classes of Animalia.
+find the ones with highest species richness.
+```{r}
+topclasses <- topn("Animalia", "Class", 12)
+topclasses
+```
+```{r, echo = TRUE}
+taxamodel("Malacostraca", "Species", "logistic")
+taxamodel("Gastropoda", "Species", "logistic")
+taxamodel("Actinopterygii", "Species", "logistic")
+taxamodel("Polychaeta", "Species", "logistic")
+taxamodel("Gymnolaemata", "Species", "logistic")
+taxamodel("Bivalvia", "Species", "logistic")
+taxamodel("Demospongiae", "Species", "logistic")
+taxamodel("Hexanauplia", "Species", "logistic")
+taxamodel("Anthozoa", "Species", "logistic")
+taxamodel("Hydrozoa", "Species", "logistic")
+```
+
+##Collect the predictied and actual values in one data frame
+```{r, echo = TRUE, eval = TRUE}
+library(stringr)
+library(drc)
+library(data.table)
+taxa <- c("Arthropoda","Mollusca", "Chordata", "Cnidaria", "Echinodermata","Annelida", "Bryozoa", "Porifera", "Nematoda", "Brachiopoda", "Nemertea", "Platyhelminthes")
+
+ranks <- rep("Species", length(taxa))
+strLines <- mapply(taxa_rich, taxa, ranks)
+prediction <- function(strLine) {
+  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][1]
+}
+preds <- as.numeric(unlist(lapply(strLines, prediction)))
+actual <- function(strLine) {
+  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][3]
+}
+actuals <- as.numeric(unlist(lapply(strLines, actual)))
+ndf <- data.frame(taxa, actuals, preds)
+
+#dev.new(width=5, height=5)
+x11(width = 5, height = 5)
+plot(actuals, preds, xlab = "Predicted number of species", ylab = "Actual number of species", pch = 19)
+abline(0,1, lty = 2)
+#text(actuals~preds, labels = taxa, data = ndf, cex = 0.7, font = 1.5)
+```
+
+add points of classes in Animalia to the plot
+```{r, echo = TRUE, eval = TRUE}
+taxa <- c("Malacostraca", "Gastropoda", "Actinopterygii", "Polychaeta", "Bivalvia", "Demospongiae", "Hexanauplia", "Anthozoa", "Hydrozoa")
+ranks <- rep("Species", length(taxa))
+strLines <- mapply(taxa_rich, taxa, ranks)
+
+prediction_class <- function(strLine) {
+  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][1]
+}
+preds_classes <- unlist(lapply(strLines, prediction_class))
+
+actual_class <- function(strLine) {
+  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][3]
+}
+actuals_classes <- unlist(lapply(strLines, actual_class)) 
+
+ndf_classes <- data.frame(actuals_classes, preds_classes)
+x11(width=5, height=5)
+#windows.options(width = 5, height = 5)
+plot(actuals, preds, xlab = "Predicted number of species", ylab = "Actual number of species", pch = 19)
+abline(0,1, lty = 2)
+points(preds_classes, actuals_classes, pch = 2, cex = 0.8)
+```
+
+Now collect all species richness of all subordinate taxa in *Animalia*.
+```{r}
+data_m <- subset(data_m, Kingdoms == "Animalia")
+dim(data_m)
+richness <- function(rank) {
+  length(spetaxalist(data_m, rank))
+}
+
+ranks <- c("Phylum", "Class", "Order", "Family", "Genus")
+
+allrichness <- unlist(lapply(ranks, richness))
+forx <- seq(1:length(allrichness))
+model <- lm(log(log(allrichness)) ~ forx)
+summary(model)
+
+plot(log(log(allrichness)) ~ forx, ylab = "log10(log10(species richness))", xlab = "", pch = 19, ylim = c(1, 2.5))
+abline(model, col = "red", lwd = 3, lty = 2)
+title("Species richness of subordinate taxa in Animalia")
+text(1.2, 1.4, "Phylum", cex = 0.8)
+text(2.2, 1.6, "Class", cex = 0.8)
+text(3.2, 1.8, "Order", cex = 0.8)
+text(4.2, 1.9, "Family", cex = 0.8)
+text(4.9, 2.0, "Genus", cex = 0.8)
+
+```
+
