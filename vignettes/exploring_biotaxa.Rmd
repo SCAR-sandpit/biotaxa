@@ -68,11 +68,11 @@ taxa <- c("Arthropoda","Mollusca", "Chordata", "Cnidaria", "Echinodermata","Anne
 ranks <- rep("Species", length(taxa))
 strLines <- mapply(taxa_rich, taxa, ranks)
 prediction <- function(strLine) {
-  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][1]
+  str_extract_all(strLine, "\\(?[0-9]+\\)?")[[1]][1]
 }
 preds <- as.numeric(unlist(lapply(strLines, prediction)))
 actual <- function(strLine) {
-  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][3]
+  str_extract_all(strLine, "\\(?[0-9]+\\)?")[[1]][2]
 }
 actuals <- as.numeric(unlist(lapply(strLines, actual)))
 ndf <- data.frame(taxa, actuals, preds)
