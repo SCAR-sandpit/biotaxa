@@ -138,3 +138,42 @@ text(4.9, 2.0, "Genus", cex = 0.8)
 
 ```
 
+Try *Mollusca*, one of the most well studies phylum in the dataset.
+```{r}
+topmollusca <- topn("Mollusca", "Class", 10)
+topmollusca #it appears there are only 8 classes of mollusca in the dataset
+```
+
+Visualise the discovery curves of each class in *Mollusca*.
+```{r}
+df <- subset(data_m, Phyla == "Mollusca")
+classes_mollusca <- unique(df$Classes)
+taxamodel("Gastropoda", "Species","logistic")
+taxamodel("Bivalvia", "Species","logistic")
+taxamodel("Cephalopoda", "Species","logistic")
+taxamodel("Polyplacophora", "Species","logistic")
+taxamodel("Solenogastres", "Species", "logistic")
+taxamodel("Monoplacophora", "Species","logistic")
+```
+
+```{r}
+taxa <- c("Gastropoda", "Bivalvia", "Cephalopoda", "Polyplacophora", "Solenogastres")
+ranks <- rep("Species", length(taxa))
+strLines <- mapply(taxa_rich, taxa, ranks)
+prediction <- function(strLine) {
+  str_extract_all(strLine, "\\(?[0-9]+\\)?")[[1]][1]
+}
+preds <- as.numeric(unlist(lapply(strLines, prediction)))
+actual <- function(strLine) {
+  str_extract_all(strLine, "\\(?[0-9]+\\)?")[[1]][2]
+}
+actuals <- as.numeric(unlist(lapply(strLines, actual)))
+ndf <- data.frame(taxa, actuals, preds)
+
+x11(width=5, height=5)
+
+plot(actuals, preds, xlab = "Predicted number of species", ylab = "Actual number of species", pch = 2)
+title("Species richness of classes in Mollusca")
+abline(0,1, lty = 2)
+```
+
