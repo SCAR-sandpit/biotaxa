@@ -91,12 +91,12 @@ ranks <- rep("Species", length(taxa))
 strLines <- mapply(taxa_rich, taxa, ranks)
 
 prediction_class <- function(strLine) {
-  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][1]
+  str_extract_all(strLine, "\\(?[0-9]+\\)?")[[1]][1]
 }
 preds_classes <- unlist(lapply(strLines, prediction_class))
 
 actual_class <- function(strLine) {
-  str_extract_all(strLine, "\\(?[0-9,.]+\\)?")[[1]][3]
+  str_extract_all(strLine, "\\(?[0-9]+\\)?")[[1]][2]
 }
 actuals_classes <- unlist(lapply(strLines, actual_class)) 
 
