@@ -1,0 +1,47 @@
+---
+title: "Exploring Power Law 2"
+author: "Hsun-Yi Hsieh"
+date: "6/5/2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is to demonstrate the use of biotaxa to explore whether there is a scale-free power law in taxonomic richnesses.
+
+```{r}
+library(biotaxa)
+Arthropoda <- subset(data_m, Phyla == "Arthropoda")
+head(Arthropoda)
+```
+Find all of the classes of Mollusca
+```{r}
+classes_msa <- unique(Arthropoda$Classes)
+```
+
+remove empty data
+```{r}
+classes_msa <- as.character(classes_msa[classes_msa != ""])
+classes_msa
+```
+
+Find the lower taxa (order) richness of each class in Mollusca
+```{r}
+orders_distiller <- frequencyrank(classes_msa[1], "Order")[1]
+orders_distiller <- orders_distiller[orders_distiller != ""]
+```
+
+```{r}
+lower_taxa_richness <- function(taxa, rank) {
+  dim(frequencyrank(taxa, rank))[1]
+}
+```
+
+```{r}
+tbl <- data.frame(mapply(lower_taxa_richness, orders_distiller, "Genus"))
+```
+
+Anton suggests to look at Amphipoda

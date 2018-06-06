@@ -5,7 +5,7 @@
 #' @return all taxa of a rank in a dataset
 #' @examples
 #'\dontrun{
-#'taxalist(data_m, rank)
+#'spetaxalist(data_m, rank)
 #'}
 #'@export
 

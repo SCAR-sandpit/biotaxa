@@ -1,0 +1,33 @@
+---
+title: "exploring power law relationships between hierarchical taxonomic categories"
+author: "Hsun-Yi Hsieh"
+date: "6/5/2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Note: users are encouraged to appropriately use survey data while employing the code for investigating the power law relationship between taxonomic categories. </br>
+
+The method is adopted from **Passy and Legendre, Power law relationships among hierarchical categories in algae reveal a new paradox of the plankton, Global Ecology and Biogeography (2006) 15, 528-535**, along with other studies of the kind.
+
+The dataset should include hierarhical categories of species. Here the example dataset is only for demonstration, rather than a basis for the generation of scientific perspectives. 
+
+Data should be composed of, for instance, *samples of phytoplankton, samples of trees, etc.*
+```{r}
+df <- subset(data_m, Phyla == "Mollusca")
+n_classes <- length(unique(df$Classes))
+n_orders <- length(unique(df$Order))
+n_families <- length(unique(df$Families))
+n_genera <- length(unique(df$Genera))
+n_species <- length(unique(df$AphiaIDs))
+```
+
+randomization
+``{r}
+
+```
+
